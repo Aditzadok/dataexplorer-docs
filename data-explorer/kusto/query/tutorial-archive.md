@@ -12,9 +12,9 @@ The best way to learn about the Kusto Query Language is to look at some basic qu
 
 ## Count rows
 
-Our example database has a table called `StormEvents`. We want to find out how large the table is. So we'll pipe its content into an operator that counts the rows in the table.
+This example database has a table called `StormEvents`. To find out how large the table is, we'll pipe its content into an operator that counts the rows in the table.
 
-*Syntax note*: A query is a data source (usually a table name), optionally followed by one or more pairs of the pipe character and some tabular operator.
+*Syntax note*: A query is a data source (usually a table name), optionally followed by one or more pairs of the pipe character ( "|" ) and some tabular operator. View this [list of syntax conventions](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/syntax-conventions) for easy reference.
 
 <!-- csl: https://help.kusto.windows.net/Samples -->
 ```kusto
@@ -68,12 +68,12 @@ Here's the output:
 |StartTime|EndTime|EventType|State|EventNarrative|
 |---|---|---|---|---|
 |2007-09-18 20:00:00.0000000|2007-09-19 18:00:00.0000000|Heavy Rain|FLORIDA|As much as 9 inches of rain fell in a 24-hour period across parts of coastal Volusia County.|
-|2007-09-20 21:57:00.0000000|2007-09-20 22:05:00.0000000|Tornado|FLORIDA|A tornado touched down in the Town of Eustis at the northern end of West Crooked Lake. The tornado quickly intensified to EF1 strength as it moved north northwest through Eustis. The track was just under two miles long and had a maximum width of 300 yards.  The tornado destroyed 7 homes. Twenty seven homes received major damage and 81 homes reported minor damage. There were no serious injuries and property damage was set at $6.2 million.|
+|2007-09-20 21:57:00.0000000|2007-09-20 22:05:00.0000000|Tornado|FLORIDA|A tornado touched down in the Town of Eustis at the northern end of West Crooked Lake. The tornado quickly intensified to EF1 strength as it moved northwest through Eustis. The track was just under 2 miles long and had a maximum width of 300 yards.  The tornado destroyed 7 homes, 27 homes received major damage, and 81 homes reported minor damage. There were no serious injuries and property damage was set at $6.2 million.|
 |2007-09-29 08:11:00.0000000|2007-09-29 08:11:00.0000000|Waterspout|ATLANTIC SOUTH|A waterspout formed in the Atlantic southeast of Melbourne Beach and briefly moved toward shore.|
-|2007-12-20 07:50:00.0000000|2007-12-20 07:53:00.0000000|Thunderstorm Wind|MISSISSIPPI|Numerous large trees were blown down with some down on power lines. Damage occurred in eastern Adams county.|
-|2007-12-30 16:00:00.0000000|2007-12-30 16:05:00.0000000|Thunderstorm Wind|GEORGIA|The county dispatch reported several trees were blown down along Quincey Batten Loop near State Road 206. The cost of tree removal was estimated.|
+|2007-12-20 07:50:00.0000000|2007-12-20 07:53:00.0000000|Thunderstorm Wind|MISSISSIPPI|Many large trees were blown down and some fell on power lines. Damage occurred in eastern Adams county.|
+|2007-12-30 16:00:00.0000000|2007-12-30 16:05:00.0000000|Thunderstorm Wind|GEORGIA|The county dispatch reported several trees were blown down along Quincey Batten Loop near State Road 206. The cost of tree removal was estimated to be $___.|
 
-But [take](./take-operator.md) shows rows from the table in no particular order, so let's sort them. ([limit](./take-operator.md) is an alias for [take](./take-operator.md) and has the same effect.)
+[Take](./take-operator.md) shows rows from the table in no particular order, so let's sort them. ([Limit](./take-operator.md) is an alias for [take](./take-operator.md) and has the same effect.)
 
 ## Order results: *sort*, *top*
 
@@ -96,17 +96,17 @@ Here's the output:
 |2007-12-31 22:30:00.0000000|2007-12-31 23:59:00.0000000|Winter Storm|MICHIGAN|This heavy snow event continued into the early morning hours on New Year's Day.|
 |2007-12-31 22:30:00.0000000|2007-12-31 23:59:00.0000000|Winter Storm|MICHIGAN|This heavy snow event continued into the early morning hours on New Year's Day.|
 |2007-12-31 22:30:00.0000000|2007-12-31 23:59:00.0000000|Winter Storm|MICHIGAN|This heavy snow event continued into the early morning hours on New Year's Day.|
-|2007-12-31 23:53:00.0000000|2007-12-31 23:53:00.0000000|High Wind|CALIFORNIA|North to northeast winds gusting to around 58 mph were reported in the mountains of Ventura county.|
+|2007-12-31 23:53:00.0000000|2007-12-31 23:53:00.0000000|High Wind|CALIFORNIA|High winds gusting to around 58 mph were reported in the mountains of Ventura County.|
 |2007-12-31 23:53:00.0000000|2007-12-31 23:53:00.0000000|High Wind|CALIFORNIA|The Warm Springs RAWS sensor reported northerly winds gusting to 58 mph.|
 
-You can achieve the same result by using  either [sort](./sort-operator.md), and then [take](./take-operator.md):
+You can achieve the same result by using [sort](./sort-operator.md), and then [take](./take-operator.md):
 
 <!-- csl: https://help.kusto.windows.net/Samples -->
 ```kusto
 StormEvents
 | sort by StartTime desc
 | take 5
-| project  StartTime, EndTime, EventType, EventNarrative
+| project  StartTime, EndTime, EventType, State, EventNarrative
 ```
 
 ## Compute derived columns: *extend*
